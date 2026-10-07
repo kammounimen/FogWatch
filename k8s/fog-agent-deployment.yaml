@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fog-agent-a
+  namespace: fogwatch
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: fog-agent-a}
+  template:
+    metadata:
+      labels: {app: fog-agent-a}
+    spec:
+      nodeSelector:
+        site: A
+      hostNetwork: true
+      containers:
+      - name: fog-agent
+        image: fog-agent:v1
+        imagePullPolicy: Never
+        env:
+        - name: SITE_ID
+          value: "A"
+        volumeMounts:
+        - name: suricata-logs
+          mountPath: /var/log/suricata
+      volumes:
+      - name: suricata-logs
+        hostPath:
+          path: /var/log/suricata
