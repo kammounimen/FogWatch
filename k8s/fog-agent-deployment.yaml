@@ -28,3 +28,4 @@ spec:
       - name: suricata-logs
         hostPath:
           path: /var/log/suricata
+

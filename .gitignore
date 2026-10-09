@@ -1,0 +1,6 @@
+*.log
+eve.json
+*.pcap
+.env
+__pycache__/
+

@@ -1,0 +1,9 @@
+# Règles locales FogWatch : identiques sur les 3 sites.
+# flags:S = on ne compte que le SYN initial, donc 1 connexion = 1 alerte.
+
+# Compteur de tentatives (c'est ce sid que fog-agent compte)
+alert tcp any any -> $HOME_NET 22 (msg:"SSH connection attempt"; flags:S; flow:to_server; sid:9000001; rev:1;)
+
+# Seuil local volontairement haut (>= 5 SYN en 60 s depuis la même IP)
+alert tcp any any -> $HOME_NET 22 (msg:"SSH possible bruteforce"; flags:S; flow:to_server; threshold:type threshold, track by_src, count 5, seconds 60; sid:9000002; rev:1;)
+
